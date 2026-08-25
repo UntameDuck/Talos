@@ -1,0 +1,49 @@
+# --- secrets / keys: NEVER commit ---
+.env
+*.pem
+*.key
+*.p8
+server/.keys/
+attacker/.keys/
+experiments/.keys/
+
+# --- python ---
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.db
+*.sqlite3
+
+# --- experiment output (raw data is regenerated; keep dir structure) ---
+experiments/raw/*
+!experiments/raw/.gitkeep
+experiments/processed/*
+!experiments/processed/.gitkeep
+experiments/results/*
+!experiments/results/.gitkeep
+experiments/plots/*
+!experiments/plots/.gitkeep
+
+# --- android ---
+android/.gradle/
+android/build/
+android/*/build/
+android/local.properties
+*.jks
+*.keystore
+
+# --- esp-idf ---
+embedded/firmware/build/
+embedded/firmware/sdkconfig
+embedded/firmware/sdkconfig.old
+embedded/firmware/host_test/build/
+
+# --- os / editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

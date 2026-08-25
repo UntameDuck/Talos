@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  python:
+    name: server + attacker + experiments (Python)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ruff
+      - name: Lint (ruff)
+        run: ruff check server attacker experiments || true   # skeleton 단계: 경고 허용
+      - name: Server + attacker tests
+        run: python -m pytest server/tests attacker/tests -q
+      - name: Smoke — attack matrix (small)
+        run: |
+          cd attacker
+          python -m boundattack attack all --arm all --runs 2 --quiet
+      - name: Smoke — experiment pipeline (small)
+        run: |
+          python experiments/runners/run_security.py --mode all --runs 2
+          python experiments/runners/run_latency.py --mode all --runs 2
+          python experiments/runners/make_plots.py
+
+  android:
+    name: Android build (best-effort)
+    runs-on: ubuntu-latest
+    continue-on-error: true   # 스켈레톤 단계: 실패해도 CI 전체를 막지 않는다
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Gradle build
+        working-directory: android
+        run: |
+          if [ -f gradlew ]; then ./gradlew assembleDebug --stacktrace; else echo "no gradle wrapper yet"; fi
+
+  firmware:
+    name: Firmware host tests (best-effort)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Host unit tests
+        working-directory: embedded/firmware/host_test
+        run: |
+          if [ -f CMakeLists.txt ]; then
+            cmake -S . -B build && cmake --build build && ctest --test-dir build --output-on-failure
+          else
+            echo "no host test build yet"
+          fi

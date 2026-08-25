@@ -1,0 +1,30 @@
+# BoundAuth 개발용 compose. 비밀값은 .env 에서 주입한다(저장소에 커밋 금지).
+services:
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      BOUNDAUTH_ENV: "${BOUNDAUTH_ENV:-dev}"
+      BOUNDAUTH_DETAILED_ERRORS: "${BOUNDAUTH_DETAILED_ERRORS:-true}"
+      BOUNDAUTH_ISSUER: "${BOUNDAUTH_ISSUER:-http://localhost:8000}"
+      BOUNDAUTH_PUBLIC_BASE_URL: "${BOUNDAUTH_PUBLIC_BASE_URL:-http://localhost:8000}"
+      BOUNDAUTH_SIGNING_KEY_PATH: "/keys/server_es256.pem"
+      BOUNDAUTH_DATABASE_URL: "${BOUNDAUTH_DATABASE_URL:-}"
+      BOUNDAUTH_SEED_USERNAME: "${BOUNDAUTH_SEED_USERNAME:-demo}"
+      BOUNDAUTH_SEED_PASSWORD: "${BOUNDAUTH_SEED_PASSWORD:-}"
+    volumes:
+      # 서명키/DB 는 호스트 볼륨에 둔다. 이미지에 비밀을 굽지 않는다.
+      - boundauth_keys:/keys
+      - boundauth_data:/app/server/.data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health').status==200 else 1)"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  boundauth_keys:
+  boundauth_data:
