@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 320" role="img" aria-labelledby="title desc">
+  <title id="title">TALOS</title>
+  <desc id="desc">하드웨어 신뢰 경계와 보안 칩을 표현한 TALOS 로고</desc>
+  <rect width="1000" height="320" fill="#111214" />
+  <path d="M220 62l86 49v98l-86 49-86-49v-98z" fill="none" stroke="#f7f8fa" stroke-width="18" stroke-linejoin="round" />
+  <rect x="174" y="114" width="92" height="92" rx="16" fill="#f7f8fa" />
+  <circle cx="220" cy="160" r="18" fill="#111214" />
+  <path d="M220 178v22" stroke="#111214" stroke-width="12" stroke-linecap="round" />
+  <text x="370" y="166" fill="#f7f8fa" font-family="Bahnschrift, 'Segoe UI', sans-serif" font-size="122" font-weight="600" letter-spacing="1" dominant-baseline="middle">TALOS</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 520" role="img" aria-labelledby="title desc">
+  <title id="title">TALOS — Keeping trust intact, beyond the login.</title>
+  <desc id="desc">Minimal dark banner with the TALOS hardware trust-boundary mark, project name, and vision statement.</desc>
+  <rect width="1600" height="640" fill="#0d1117" />
+  <rect x="350" y="110" width="900" height="250" fill="#111111" />
+  <text x="800" y="278" fill="#f7f8fa" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="124" font-weight="600" letter-spacing="1" text-anchor="middle">TALOS</text>
+  <text x="800" y="452" fill="#f7f8fa" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="34" font-weight="600" text-anchor="middle" letter-spacing="-.4">Keeping trust intact, beyond the login.</text>
+</svg>
